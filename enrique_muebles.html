@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enrique Araus — Carpintería Artesanal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5efe6;
+    --warm-white: #faf7f2;
+    --oak: #c8934a;
+    --dark-oak: #7a4f24;
+    --walnut: #3d2b1a;
+    --charcoal: #1e1a17;
+    --ash: #8a7d72;
+    --light-ash: #d4c9bc;
+    --gold: #d4a853;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── CURSOR ─────────────────────────────── */
+  .cursor {
+    width: 14px; height: 14px;
+    background: var(--oak);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transition: transform .2s ease, opacity .2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    width: 38px; height: 38px;
+    border: 1.5px solid var(--oak);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: transform .4s ease;
+    opacity: .5;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 60px;
+    background: rgba(250,247,242,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,147,74,.15);
+    transition: padding .3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; font-weight: 900;
+    letter-spacing: -.5px;
+    color: var(--walnut);
+  }
+  .nav-logo span { color: var(--oak); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: .82rem; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; color: var(--ash);
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--oak); }
+  .nav-cta {
+    background: var(--walnut); color: var(--cream);
+    padding: 10px 24px; border-radius: 2px;
+    font-size: .78rem; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none;
+    transition: background .3s;
+  }
+  .nav-cta:hover { background: var(--oak); color: #fff; }
+
+  /* ── HERO ────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    background: var(--walnut);
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 140px 70px 80px;
+    position: relative; z-index: 2;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute; right: -60px; top: 0;
+    width: 120px; height: 100%;
+    background: var(--walnut);
+    clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
+    z-index: 3;
+  }
+  .hero-eyebrow {
+    font-size: .72rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--oak); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 40px; height: 1px; background: var(--oak);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.0;
+    color: var(--cream);
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+    display: block;
+  }
+  .hero-sub {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 300;
+    color: var(--light-ash); line-height: 1.7;
+    max-width: 380px;
+  }
+  .hero-years {
+    margin-top: 48px;
+    display: flex; gap: 40px;
+  }
+  .hero-stat { text-align: left; }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900; color: var(--oak);
+    line-height: 1;
+  }
+  .hero-stat .label {
+    font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ash); margin-top: 4px;
+  }
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(61,43,26,.3) 0%, transparent 60%);
+    z-index: 1;
+  }
+  .hero-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: sepia(15%) contrast(1.08);
+    transform: scale(1.04);
+    transition: transform 8s ease;
+  }
+  .hero-img:hover { transform: scale(1.0); }
+  .hero-badge {
+    position: absolute; bottom: 50px; right: 50px;
+    width: 120px; height: 120px;
+    background: var(--oak);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; z-index: 2;
+    animation: rotateBadge 20s linear infinite;
+  }
+  .hero-badge .badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: #fff; line-height: 1;
+  }
+  .hero-badge .badge-text {
+    font-size: .6rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,255,255,.8); margin-top: 4px;
+  }
+  @keyframes rotateBadge {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── DIVIDER ─────────────────────────────── */
+  .divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--cream), var(--oak), var(--dark-oak), var(--oak), var(--cream));
+  }
+
+  /* ── SECTION INTRO ───────────────────────── */
+  .section-intro {
+    text-align: center; padding: 90px 60px 0;
+  }
+  .section-intro .eyebrow {
+    font-size: .72rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--oak); display: flex; align-items: center;
+    justify-content: center; gap: 16px; margin-bottom: 20px;
+  }
+  .section-intro .eyebrow::before, .section-intro .eyebrow::after {
+    content: ''; display: block; width: 50px; height: 1px; background: var(--oak);
+  }
+  .section-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 900; color: var(--walnut);
+    line-height: 1.1;
+  }
+  .section-intro h2 em { font-style: italic; color: var(--oak); }
+  .section-intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300;
+    color: var(--ash); max-width: 560px;
+    margin: 18px auto 0; line-height: 1.8;
+  }
+
+  /* ── PRODUCTS GRID ───────────────────────── */
+  .products {
+    padding: 60px 60px 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 20px rgba(61,43,26,.06);
+    transition: box-shadow .35s, transform .35s;
+  }
+  .product-card:nth-child(4n+1) { grid-column: span 2; }
+  .product-card:nth-child(7n+1) { grid-column: span 1; }
+  .product-card:hover {
+    box-shadow: 0 20px 50px rgba(61,43,26,.18);
+    transform: translateY(-6px);
+  }
+
+  .card-img-wrap {
+    position: relative; overflow: hidden;
+    height: 320px;
+  }
+  .product-card:nth-child(4n+1) .card-img-wrap { height: 420px; }
+
+  .card-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+    filter: sepia(10%) contrast(1.05);
+  }
+  .product-card:hover .card-img { transform: scale(1.07); }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(30,26,23,.85) 100%);
+    opacity: 0; transition: opacity .4s;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 28px;
+  }
+  .product-card:hover .card-overlay { opacity: 1; }
+  .card-overlay .detail-btn {
+    display: inline-block;
+    padding: 10px 24px; background: var(--oak); color: #fff;
+    font-size: .78rem; letter-spacing: 2px; text-transform: uppercase;
+    border: none; cursor: pointer; border-radius: 2px;
+    width: fit-content;
+    transition: background .3s;
+  }
+  .card-overlay .detail-btn:hover { background: var(--gold); }
+  .card-overlay .overlay-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: #fff; margin-bottom: 10px;
+  }
+
+  .card-tag {
+    position: absolute; top: 18px; left: 18px;
+    background: var(--walnut); color: var(--cream);
+    font-size: .65rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 2px;
+  }
+  .card-tag.nuevo { background: var(--oak); }
+
+  .card-body { padding: 22px 24px 26px; }
+  .card-category {
+    font-size: .68rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--oak); margin-bottom: 8px;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--walnut);
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 300; color: var(--ash); line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--dark-oak);
+  }
+  .card-material {
+    font-size: .7rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--light-ash); background: var(--warm-white);
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* ── MODAL ───────────────────────────────── */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(30,26,23,.75);
+    backdrop-filter: blur(8px);
+    z-index: 500; display: none;
+    align-items: center; justify-content: center;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--warm-white);
+    width: min(900px, 95vw);
+    max-height: 90vh; overflow-y: auto;
+    border-radius: 4px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    animation: modalIn .4s ease;
+  }
+  @keyframes modalIn {
+    from { transform: scale(.9) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .modal-img { height: 100%; min-height: 400px; object-fit: cover; }
+  .modal-info { padding: 50px 44px; position: relative; }
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 36px; height: 36px; background: none; border: 1px solid var(--light-ash);
+    border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--ash);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s;
+  }
+  .modal-close:hover { background: var(--walnut); color: #fff; border-color: var(--walnut); }
+  .modal-cat {
+    font-size: .68rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--oak); margin-bottom: 12px;
+  }
+  .modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--walnut);
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .modal-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 300; color: var(--ash);
+    line-height: 1.75; margin-bottom: 30px;
+  }
+  .modal-specs { margin-bottom: 30px; }
+  .modal-spec {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid var(--light-ash);
+  }
+  .modal-spec .spec-key {
+    font-size: .75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ash);
+  }
+  .modal-spec .spec-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600; color: var(--walnut);
+  }
+  .modal-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 900; color: var(--oak);
+    margin-bottom: 24px;
+  }
+  .modal-btn {
+    display: block; width: 100%;
+    background: var(--walnut); color: var(--cream);
+    padding: 14px; text-align: center;
+    font-size: .78rem; letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none;
+    transition: background .3s;
+  }
+  .modal-btn:hover { background: var(--oak); }
+
+  /* ── BANNER ──────────────────────────────── */
+  .banner {
+    background: var(--walnut);
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 340px;
+    overflow: hidden; position: relative;
+  }
+  .banner::after {
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 100%;
+    background: rgba(200,147,74,.25);
+  }
+  .banner-left {
+    padding: 70px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .banner-left h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+    color: var(--cream); line-height: 1.1; margin-bottom: 18px;
+  }
+  .banner-left h3 em { font-style: italic; color: var(--gold); }
+  .banner-left p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 300; color: var(--light-ash);
+    line-height: 1.75;
+  }
+  .banner-right {
+    padding: 70px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 22px;
+  }
+  .feature {
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+  .feature-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(200,147,74,.15);
+    border: 1px solid rgba(200,147,74,.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .feature-text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--cream); margin-bottom: 4px;
+  }
+  .feature-text p {
+    font-size: .82rem; color: var(--ash); line-height: 1.5;
+  }
+
+  /* ── CONTACT ─────────────────────────────── */
+  .contact {
+    padding: 100px 60px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 900;
+    color: var(--walnut); line-height: 1.1; margin-bottom: 20px;
+  }
+  .contact-left h2 em { font-style: italic; color: var(--oak); }
+  .contact-left p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 300; color: var(--ash); line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: center;
+    padding: 18px 22px;
+    background: #fff;
+    border-left: 3px solid var(--oak);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 12px rgba(61,43,26,.05);
+  }
+  .contact-item .ci-icon { font-size: 1.4rem; }
+  .contact-item .ci-label {
+    font-size: .68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ash); margin-bottom: 3px;
+  }
+  .contact-item .ci-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--walnut);
+  }
+  .contact-item a { text-decoration: none; color: inherit; }
+  .contact-item a:hover .ci-val { color: var(--oak); }
+
+  .contact-right {
+    background: #fff;
+    padding: 50px 44px;
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(61,43,26,.08);
+    border-top: 4px solid var(--oak);
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--walnut); margin-bottom: 30px;
+  }
+  .form-group { margin-bottom: 22px; }
+  .form-group label {
+    display: block;
+    font-size: .7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ash); margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; padding: 12px 16px;
+    border: 1.5px solid var(--light-ash);
+    border-radius: 2px;
+    background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; color: var(--walnut);
+    transition: border-color .3s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--oak); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit {
+    width: 100%; padding: 14px;
+    background: var(--walnut); color: var(--cream);
+    border: none; border-radius: 2px; cursor: pointer;
+    font-size: .78rem; letter-spacing: 2px; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    transition: background .3s;
+    position: relative; overflow: hidden;
+  }
+  .form-submit:hover { background: var(--oak); }
+  .form-success {
+    display: none; text-align: center; padding: 30px 0;
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    color: var(--walnut);
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    background: var(--charcoal);
+    padding: 60px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    border-top: 1px solid rgba(200,147,74,.2);
+  }
+  .footer-brand .fb-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900; color: var(--cream);
+    margin-bottom: 14px;
+  }
+  .footer-brand .fb-logo span { color: var(--oak); }
+  .footer-brand p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 300; color: var(--ash); line-height: 1.7;
+    max-width: 280px;
+  }
+  .footer-col h4 {
+    font-size: .7rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--oak); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    text-decoration: none; color: var(--ash); font-size: .88rem;
+    transition: color .3s;
+  }
+  .footer-col ul a:hover { color: var(--cream); }
+  .footer-bottom {
+    background: var(--charcoal);
+    padding: 20px 60px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p {
+    font-size: .75rem; color: var(--ash); letter-spacing: .5px;
+  }
+
+  /* ── SCROLL ANIMATIONS ───────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 28px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 120px 36px 60px; }
+    .hero-left::after { display: none; }
+    .hero-right { height: 50vw; }
+    .products { grid-template-columns: 1fr; padding: 40px 24px 60px; }
+    .product-card:nth-child(4n+1) { grid-column: span 1; }
+    .banner { grid-template-columns: 1fr; }
+    .banner-left, .banner-right { padding: 50px 36px; }
+    .contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    footer { grid-template-columns: 1fr; padding: 40px 24px; gap: 30px; }
+    .footer-bottom { flex-direction: column; gap: 6px; padding: 16px 24px; }
+    .modal { grid-template-columns: 1fr; }
+    .modal-img { height: 280px; }
+    .section-intro { padding: 60px 24px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Araus<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Consultar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Carpintería Artesanal de Autor</div>
+    <h1 class="hero-title">
+      Muebles que<br>
+      <em>cuentan historias</em>
+    </h1>
+    <p class="hero-sub">
+      Cada pieza es una obra única, trabajada a mano con maderas nobles seleccionadas y técnicas transmitidas por generaciones. Calidad que perdura toda la vida.
+    </p>
+    <div class="hero-years">
+      <div class="hero-stat">
+        <div class="num">+25</div>
+        <div class="label">Años de oficio</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">+500</div>
+        <div class="label">Piezas creadas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">100%</div>
+        <div class="label">Artesanal</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img"
+      src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85"
+      alt="Sala con muebles artesanales" loading="eager">
+    <div class="hero-badge">
+      <div class="badge-num">25+</div>
+      <div class="badge-text">años</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+  <div class="section-intro reveal">
+    <div class="eyebrow">Catálogo de Muebles</div>
+    <h2>Piezas <em>únicas</em> a la venta</h2>
+    <p>Cada mueble es fabricado con maderas seleccionadas, terminaciones impecables y el sello personal de Enrique Araus.</p>
+  </div>
+  <div class="products">
+
+    <!-- Card 1 - Grande -->
+    <div class="product-card reveal" onclick="openModal(0)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt="Sofá de madera" loading="lazy">
+        <span class="card-tag nuevo">Nuevo</span>
+        <div class="card-overlay">
+          <div class="overlay-name">Sofá Roble Macizo</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Sala de estar</div>
+        <div class="card-name">Sofá Roble Macizo</div>
+        <p class="card-desc">Estructura de roble nacional con tapizado premium en lino beige. Diseño clásico con detalles tallados a mano en los apoyabrazos.</p>
+        <div class="card-footer">
+          <div class="card-price">$890.000</div>
+          <span class="card-material">Roble / Lino</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="product-card reveal" onclick="openModal(1)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80" alt="Mesa de comedor" loading="lazy">
+        <div class="card-overlay">
+          <div class="overlay-name">Mesa Nogal Imperial</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Comedor</div>
+        <div class="card-name">Mesa Nogal Imperial</div>
+        <p class="card-desc">Mesa de comedor para 8 personas en nogal americano. Acabado con aceite natural y cera de abeja.</p>
+        <div class="card-footer">
+          <div class="card-price">$650.000</div>
+          <span class="card-material">Nogal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="product-card reveal" onclick="openModal(2)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=700&q=80" alt="Silla de madera" loading="lazy">
+        <span class="card-tag">Destacado</span>
+        <div class="card-overlay">
+          <div class="overlay-name">Silla Artesanal Clásica</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Sillas</div>
+        <div class="card-name">Silla Artesanal Clásica</div>
+        <p class="card-desc">Silla tallada a mano en madera de pino radiata con asiento acolchado intercambiable. Disponibles en set de 4 o 6.</p>
+        <div class="card-footer">
+          <div class="card-price">$120.000</div>
+          <span class="card-material">Pino / Cuero</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="product-card reveal" onclick="openModal(3)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=700&q=80" alt="Escritorio de madera" loading="lazy">
+        <div class="card-overlay">
+          <div class="overlay-name">Escritorio Ejecutivo</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Oficina</div>
+        <div class="card-name">Escritorio Ejecutivo</div>
+        <p class="card-desc">Escritorio en madera nativa con cajones deslizantes y herrajes en bronce antiguo. Ideal para espacios de trabajo de alta gama.</p>
+        <div class="card-footer">
+          <div class="card-price">$420.000</div>
+          <span class="card-material">Raulí</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="product-card reveal" onclick="openModal(4)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=700&q=80" alt="Cama de madera" loading="lazy">
+        <span class="card-tag nuevo">Nuevo</span>
+        <div class="card-overlay">
+          <div class="overlay-name">Cama King Nogal</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Dormitorio</div>
+        <div class="card-name">Cama King Nogal</div>
+        <p class="card-desc">Cama King Size con cabecero tallado en madera de nogal. Incluye cajoneras laterales integradas con cierre suave.</p>
+        <div class="card-footer">
+          <div class="card-price">$780.000</div>
+          <span class="card-material">Nogal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="product-card reveal" onclick="openModal(5)">
+      <div class="card-img-wrap">
+        <img class="card-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80" alt="Biblioteca de madera" loading="lazy">
+        <div class="card-overlay">
+          <div class="overlay-name">Biblioteca Clásica</div>
+          <button class="detail-btn">Ver detalles</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Biblioteca</div>
+        <div class="card-name">Biblioteca Clásica</div>
+        <p class="card-desc">Biblioteca de piso a techo en madera de raulí con estantes regulables. Fabricación a medida disponible.</p>
+        <div class="card-footer">
+          <div class="card-price">$550.000</div>
+          <span class="card-material">Raulí</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BANNER NOSOTROS -->
+<section id="nosotros" class="banner">
+  <div class="banner-left reveal">
+    <h3>Más de 25 años<br>creando <em>belleza</em><br>con madera</h3>
+    <p>Enrique Araus Bustamante es carpintero de oficio desde joven. Su taller familiar en el corazón de la región es donde cada pieza cobra vida, trabajada con paciencia, tradición y pasión por el detalle.</p>
+  </div>
+  <div class="banner-right reveal">
+    <div class="feature">
+      <div class="feature-icon">🌳</div>
+      <div class="feature-text">
+        <h4>Maderas Nativas Seleccionadas</h4>
+        <p>Trabajamos exclusivamente con maderas de primera calidad, secadas al horno para garantizar su durabilidad.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔨</div>
+      <div class="feature-text">
+        <h4>100% Hecho a Mano</h4>
+        <p>Cada pieza es única. Nunca producción en serie, siempre artesanía cuidada al detalle.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📐</div>
+      <div class="feature-text">
+        <h4>Diseño Personalizado</h4>
+        <p>¿Tienes una idea? Enrique trabaja a tu medida y transforma tu visión en realidad.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚚</div>
+      <div class="feature-text">
+        <h4>Entrega e Instalación</h4>
+        <p>Nos encargamos de llevar tu mueble e instalarlo en el lugar que elijas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact">
+  <div class="contact-left reveal">
+    <h2>Hablemos de tu<br><em>próximo mueble</em></h2>
+    <p>¿Te interesa alguna pieza o quieres algo diseñado especialmente para ti? Contáctate directamente con Enrique. Responde a todos los mensajes de forma personal.</p>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="ci-icon">📞</div>
+        <div>
+          <div class="ci-label">Teléfono / WhatsApp</div>
+          <div class="ci-val"><a href="tel:+56912345678">+56 9 1234 5678</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">📧</div>
+        <div>
+          <div class="ci-label">Correo electrónico</div>
+          <div class="ci-val"><a href="mailto:enrique@arausmuebles.cl">enrique@arausmuebles.cl</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Taller / Visitas</div>
+          <div class="ci-val">Con previa coordinación</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🕐</div>
+        <div>
+          <div class="ci-label">Horario de atención</div>
+          <div class="ci-val">Lun–Sáb · 9:00 – 18:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right reveal">
+    <div class="form-title">Enviar consulta</div>
+    <div id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" placeholder="+56 9 ..." id="fphone">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="tucorreo@email.com" id="femail">
+      </div>
+      <div class="form-group">
+        <label>¿Qué te interesa?</label>
+        <select id="finterest">
+          <option value="">Selecciona una opción…</option>
+          <option>Sofá Roble Macizo</option>
+          <option>Mesa Nogal Imperial</option>
+          <option>Silla Artesanal Clásica</option>
+          <option>Escritorio Ejecutivo</option>
+          <option>Cama King Nogal</option>
+          <option>Biblioteca Clásica</option>
+          <option>Diseño personalizado</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Mensaje</label>
+        <textarea placeholder="Cuéntame qué necesitas, medidas, colores, plazos…" id="fmessage"></textarea>
+      </div>
+      <button class="form-submit" onclick="sendForm()">Enviar consulta →</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      ✅ ¡Mensaje enviado!<br>
+      <span style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ash);font-weight:300;">Enrique te contactará muy pronto.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="fb-logo">Araus<span>.</span></div>
+    <p>Carpintería artesanal de autor. Muebles únicos fabricados con pasión, tradición y las mejores maderas nativas.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Catálogo</h4>
+    <ul>
+      <li><a href="#productos">Sala de estar</a></li>
+      <li><a href="#productos">Comedor</a></li>
+      <li><a href="#productos">Dormitorio</a></li>
+      <li><a href="#productos">Oficina</a></li>
+      <li><a href="#productos">A pedido</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contacto</h4>
+    <ul>
+      <li><a href="tel:+56912345678">+56 9 1234 5678</a></li>
+      <li><a href="mailto:enrique@arausmuebles.cl">enrique@arausmuebles.cl</a></li>
+      <li><a href="#contacto">Consultas</a></li>
+      <li><a href="#nosotros">Quiénes somos</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Enrique Araus Bustamante — Carpintero · Más de 25 años de oficio</p>
+  <p>Hecho con 🤍 para un artesano de verdad</p>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeModalBg(event)">
+  <div class="modal" id="modal">
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-info">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <a class="modal-btn" id="modalBtn" href="#contacto" onclick="closeModal()">Consultar por esta pieza</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CURSOR ──────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animateCursor() {
+  rx += (mx - rx) * .15;
+  ry += (my - ry) * .15;
+  cursor.style.transform = `translate(${mx - 7}px, ${my - 7}px)`;
+  cursorRing.style.transform = `translate(${rx - 19}px, ${ry - 19}px)`;
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .product-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(1.8)'; cursorRing.style.opacity = '.2'; });
+  el.addEventListener('mouseleave', () => { cursor.style.opacity = '1'; cursorRing.style.opacity = '.5'; });
+});
+
+// ── SCROLL REVEAL ───────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── PRODUCTS DATA ───────────────────────────────────────
+const products = [
+  {
+    img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=85',
+    cat: 'Sala de estar',
+    name: 'Sofá Roble Macizo',
+    desc: 'Una pieza de salón que combina comodidad y belleza natural. Estructura sólida de roble nacional, con acabado a mano con aceite de linaza y cera de abeja. El tapizado en lino beige 100% natural complementa perfectamente la calidez de la madera. Los apoyabrazos tienen detalles tallados a mano con motivos orgánicos únicos.',
+    specs: [
+      ['Material', 'Roble Nacional + Lino'],
+      ['Dimensiones', '220 × 95 × 85 cm'],
+      ['Asientos', '3 personas'],
+      ['Acabado', 'Aceite + Cera de Abeja'],
+      ['Plazo entrega', '15–20 días hábiles'],
+    ],
+    price: '$890.000'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=900&q=85',
+    cat: 'Comedor',
+    name: 'Mesa Nogal Imperial',
+    desc: 'Mesa de comedor de nogal americano seleccionado, con tablero de una sola pieza de 4 cm de espesor. Las patas torneadas a mano y el acabado natural con aceite de tung hacen de esta mesa un verdadero punto focal en cualquier comedor. Diseñada para durar generaciones.',
+    specs: [
+      ['Material', 'Nogal Americano'],
+      ['Dimensiones', '240 × 100 × 78 cm'],
+      ['Capacidad', '8 personas'],
+      ['Acabado', 'Aceite de Tung'],
+      ['Plazo entrega', '20–25 días hábiles'],
+    ],
+    price: '$650.000'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=900&q=85',
+    cat: 'Sillas',
+    name: 'Silla Artesanal Clásica',
+    desc: 'Silla clásica con espaldares calados tallados a mano. Disponible en sets de 4 o 6 unidades, con asiento acolchado reemplazable en cuero o tela. Diseño atemporal que combina con cualquier mesa de comedor. Resistente y ligera gracias a la técnica de ensamble con clavijas de madera sin adhesivos.',
+    specs: [
+      ['Material', 'Pino Radiata / Cuero'],
+      ['Dimensiones', '48 × 52 × 95 cm'],
+      ['Tapizado', 'Cuero o Lino (a elección)'],
+      ['Disponible en', 'Set de 4 o 6 unidades'],
+      ['Plazo entrega', '10–15 días hábiles'],
+    ],
+    price: '$120.000 c/u'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=900&q=85',
+    cat: 'Oficina',
+    name: 'Escritorio Ejecutivo',
+    desc: 'Escritorio de alta gama para espacios de trabajo que inspiran. Tablero en madera de raulí con herrajes en bronce antiguo. Cuatro cajones con cierre suave y una amplia superficie de trabajo. El acabado con barniz mate resiste el uso cotidiano sin perder calidez ni naturalidad.',
+    specs: [
+      ['Material', 'Raulí + Bronce Antiguo'],
+      ['Dimensiones', '160 × 75 × 78 cm'],
+      ['Cajones', '4 con cierre suave'],
+      ['Acabado', 'Barniz Mate Satinado'],
+      ['Plazo entrega', '18–22 días hábiles'],
+    ],
+    price: '$420.000'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=85',
+    cat: 'Dormitorio',
+    name: 'Cama King Nogal',
+    desc: 'Cama King Size con un cabecero monumental tallado en madera de nogal macizo. El diseño incorpora cajoneras laterales integradas con sistema de apertura push-to-open, manteniendo un aspecto limpio y elegante. Una pieza que transforma cualquier dormitorio en un refugio de lujo natural.',
+    specs: [
+      ['Material', 'Nogal Macizo'],
+      ['Tamaño', 'King (200 × 200 cm)'],
+      ['Altura cabecero', '130 cm'],
+      ['Cajoneras', '2 laterales integradas'],
+      ['Plazo entrega', '25–30 días hábiles'],
+    ],
+    price: '$780.000'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=85',
+    cat: 'Biblioteca',
+    name: 'Biblioteca Clásica',
+    desc: 'Biblioteca de piso a techo con estantes regulables cada 2 cm. Fabricada en madera de raulí con respaldo de tablero enchapado. Opción de puertas de vidrio biselado en los módulos inferiores. Disponible en medidas estándar o fabricación a medida para adaptarse perfectamente a tu espacio.',
+    specs: [
+      ['Material', 'Raulí + Vidrio Biselado'],
+      ['Dimensiones std', '180 × 40 × 230 cm'],
+      ['Estantes', 'Regulables cada 2 cm'],
+      ['Puertas', 'Vidrio (opcional)'],
+      ['Plazo entrega', '20–28 días hábiles'],
+    ],
+    price: '$550.000'
+  }
+];
+
+// ── MODAL ────────────────────────────────────────────────
+function openModal(i) {
+  const p = products[i];
+  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalImg').alt = p.name;
+  document.getElementById('modalCat').textContent = p.cat;
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalPrice').textContent = p.price;
+  const specs = p.specs.map(s =>
+    `<div class="modal-spec"><span class="spec-key">${s[0]}</span><span class="spec-val">${s[1]}</span></div>`
+  ).join('');
+  document.getElementById('modalSpecs').innerHTML = specs;
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalBg(e) {
+  if (e.target === document.getElementById('modalBg')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── FORM ─────────────────────────────────────────────────
+function sendForm() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  if (!name || !email) {
+    alert('Por favor ingresa tu nombre y correo para enviar la consulta.');
+    return;
+  }
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// ── NAV SCROLL ───────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.padding = window.scrollY > 60 ? '14px 60px' : '22px 60px';
+});
+</script>
+</body>
+</html>
